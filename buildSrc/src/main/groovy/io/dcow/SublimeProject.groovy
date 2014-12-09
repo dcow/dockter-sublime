@@ -38,12 +38,11 @@ public class SublimeProject extends DefaultTask {
     public SublimeProject() { 
         super()
 
-        def project = getProject()
-        setProperty('description', DESCRIPTION)
-        wrapper = true
-        projectFile = project.file "${project.name}.$FILE_EXTENSION"
-
-        outputs.upToDateWhen {false}
+        this.description = DESCRIPTION
+        this.wrapper = true // Most people are using the wrapper.
+        this.projectFile = project.file "${project.name}.$FILE_EXTENSION"
+        // This task is never up to date as it changes with the build script.
+        this.outputs.upToDateWhen {false}
     }
 
     @TaskAction
@@ -58,7 +57,14 @@ public class SublimeProject extends DefaultTask {
     }
 
     def addFolders(root) {
-        root.folders = [['path': '.']] // todo: add real folders
+        // We'll treat Sublime Text folders as Gradle projects 
+        root.folders = project.allprojects.collect {
+            [
+                'name': it.name,
+                'path': project.relativePath(it.projectDir),
+                'folder_exclude_patterns': [project.relativePath(it.buildDir)]
+            ]
+        }
     }
 
     def addSettings(root) {
@@ -67,27 +73,28 @@ public class SublimeProject extends DefaultTask {
 
     def addBuildSystems(root) {
         def gradle = wrapper ? "./$GRADLE$WRAPPER" : GRADLE
-        def project = getProject()
         
-        def build = [:]
-        
-        build.name = 'Gradle' 
-        build.working_dir = '$project_path'
-        build.cmd = [ "$gradle build"]
-        build.shell = true
-        build.file_regex = '^(...*?):([0-9]*):?([0-9]*)'
-        build.variants = listVariants(gradle)
-
-        root.build_systems = [build] // it's a json array
+        root.build_systems = [
+            [
+                'name': "Gradle: ${project.name}",
+                'working_dir': '$project_path',
+                'cmd': ["$gradle build"],
+                'shell': true,
+                'file_regex': '^(...*?):([0-9]*):?([0-9]*)',
+                'variants': listVariants(gradle)
+            ]
+        ]
     }
 
     def listVariants(gradle) {
-        def allTasks = project.rootProject.allprojects.collect{it.tasks}.flatten()
+        def allTasks = project.allprojects.collect{it.tasks}.flatten()
         // for now we will only expose tasks that have a description
         allTasks.findAll{it.description?.trim()}.collect {
             // chop off the leading colon..
-            def name = it.path.substring(1)
-            ['name': "$name - ${it.description}", 'cmd': ["$gradle ${it.path}"]]
+            [
+                'name': "${it.path.substring(1)} - ${it.description}", 
+                'cmd': ["$gradle ${it.path}"]
+            ]
         }
         // Ideally, we need a better reduction of tasks that includes the tasks that 
         // are available by letting top level tasks trickle down. Something like the
