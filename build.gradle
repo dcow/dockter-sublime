@@ -1,17 +1,8 @@
-apply plugin: 'groovy'
-apply plugin: 'application'
-
-group = 'me.dcow'
-version = "0.7.0"
-
-dependencies {
-	compile localGroovy()
-}
-
-mainClassName = 'me.dcow.Main'
+group = 'io.dcow'
+version = "0.7.1"
 
 task wrapper(type: Wrapper) {
-	gradleVersion '2.2.1'
+    gradleVersion '2.2.1'
 }
 
-apply plugin: me.dcow.Sublime
+apply plugin: io.dcow.Sublime
