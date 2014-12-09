@@ -42,6 +42,8 @@ public class SublimeProject extends DefaultTask {
         setProperty('description', DESCRIPTION)
         wrapper = true
         projectFile = project.file "${project.name}.$FILE_EXTENSION"
+
+        outputs.upToDateWhen {false}
     }
 
     @TaskAction
