@@ -62,7 +62,10 @@ public class SublimeProject extends DefaultTask {
             [
                 'name': it.name,
                 'path': project.relativePath(it.projectDir),
-                'folder_exclude_patterns': [project.relativePath(it.buildDir)]
+                'folder_exclude_patterns': [
+                    project.relativePath(it.buildDir),
+                    project.relativePath("${it.projectDir}/.gradle")
+                ]
             ]
         }
     }
