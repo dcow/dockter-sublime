@@ -1,4 +1,4 @@
-package me.dcow
+package io.dcow
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputFile
@@ -48,22 +48,22 @@ public class SublimeProject extends DefaultTask {
     void writeProjectFile() {
         def root = [:]
 
-        root.folders = listFolders()
-        root.settings = listSettings()
-        root.build_systems = listBuildSystems()
+        ['Folders', 'Settings', 'BuildSystems'].each {
+            "add$it" root
+        }
         
         projectFile.write prettyPrint(toJson(root))
     }
 
-    def listFolders() {
-        [['path': project.projectDir.getAbsolutePath()]]
+    def addFolders(root) {
+        root.folders = [['path': '.']] // todo: add real folders
     }
 
-    def listSettings() {
-        [] // no settings yet
+    def addSettings(root) {
+        root.settings = [] // no settings yet
     }
 
-    def listBuildSystems() {
+    def addBuildSystems(root) {
         def gradle = wrapper ? "./$GRADLE$WRAPPER" : GRADLE
         def project = getProject()
         
@@ -71,21 +71,25 @@ public class SublimeProject extends DefaultTask {
         
         build.name = 'Gradle' 
         build.working_dir = '$project_path'
-        build.cmd = [ "$gradle ${project.tasks.build ? 'build' : 'tasks'}"]
+        build.cmd = [ "$gradle build"]
         build.shell = true
         build.file_regex = '^(...*?):([0-9]*):?([0-9]*)'
         build.variants = listVariants(gradle)
 
-        [build] // it's a json array
+        root.build_systems = [build] // it's a json array
     }
 
     def listVariants(gradle) {
+        def allTasks = project.rootProject.allprojects.collect{it.tasks}.flatten()
         // for now we will only expose tasks that have a description
-        project.tasks.findAll{it.description?.trim()}.collect {
+        allTasks.findAll{it.description?.trim()}.collect {
             // chop off the leading colon..
-            def name = it.path.substring(1).capitalize()
+            def name = it.path.substring(1)
             ['name': "$name - ${it.description}", 'cmd': ["$gradle ${it.path}"]]
         }
+        // Ideally, we need a better reduction of tasks that includes the tasks that 
+        // are available by letting top level tasks trickle down. Something like the
+        // set of the union of all tasks by task name (not path).
     }
 
     boolean getWrapper() {

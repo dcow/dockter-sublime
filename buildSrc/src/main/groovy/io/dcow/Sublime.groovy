@@ -1,4 +1,4 @@
-package me.dcow
+package io.dcow
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

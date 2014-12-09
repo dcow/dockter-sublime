@@ -1,4 +1,4 @@
-package me.dcow
+package io.dcow
 
 class Main {
 	static void main(String[] args) {
