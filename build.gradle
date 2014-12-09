@@ -1,5 +1,5 @@
 group = 'io.dcow'
-version = "0.7.1"
+version = "0.7.2"
 
 task wrapper(type: Wrapper) {
     gradleVersion '2.2.1'
