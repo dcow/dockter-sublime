@@ -4,6 +4,8 @@ Tools for developing Gradle projects using Sublime Text 3.
 
 ### Gradle Plugin
 
+![Build Status](https://travis-ci.org/dcow/docter-sublime.svg?branch=master)
+
 Applying the `sublime` plugin adds a task named `sublime` to your Gradle project. Executing the task causes a *<b>Name</b>.sublime-project* file to be generated with configuration inforamtion relevant to Sublime Text. The project description is complete with an inline buildsystem. This means all your project's tasks will be available via the command palette.
 
 The drawback of this approach is that updating your project is not fluid. Sublime Text stores your latest configuration in a *<b>Name</b>.sublime-workspace* filee. Sublime also [seems to have issues reloading project information][1]. So, ideally we need a Sublime Text plugin that will *dynamically update the editor whenever a build script change is made*.
