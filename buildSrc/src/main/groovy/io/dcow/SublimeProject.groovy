@@ -71,7 +71,7 @@ public class SublimeProject extends DefaultTask {
     }
 
     def addSettings(root) {
-        root.settings = [] // no settings yet
+        root.settings = [:] // no settings yet
     }
 
     def addBuildSystems(root) {
