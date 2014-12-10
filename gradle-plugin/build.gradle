@@ -62,7 +62,7 @@ apply plugin: 'com.jfrog.bintray'
 
 bintray {
     user 'dcow'
-    key bintrayApiKey
+    key project.hasProperty('bintrayApiKey') ? bintrayApiKey : ''
 
     publications = ['mavenJava']
 
@@ -86,7 +86,7 @@ bintray {
             gpg {
                 def hasPassphrase = rootProject.hasProperty('gpgPassphrase')
                 sign = hasPassphrase
-                passphrase = hasPassphrase ? gpgPassphrase : ''
+                passphrase = hasPassphrase ? rootProject.gpgPassphrase : ''
             }
         }
 
