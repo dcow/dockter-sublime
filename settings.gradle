@@ -1,2 +1,3 @@
 rootProject.name = 'docter-sublime'
+
 include 'gradle-plugin', 'sublime-plugin', 'test-build'

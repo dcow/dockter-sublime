@@ -5,4 +5,4 @@ task wrapper(type: Wrapper) {
     gradleVersion '2.2.1'
 }
 
-apply plugin: io.dcow.Sublime
+apply plugin: 'io.dcow.sublime'

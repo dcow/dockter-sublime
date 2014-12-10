@@ -3,3 +3,4 @@ build/
 .gradle/
 *.sublime-project
 *.sublime-workspace
+gradle.properties

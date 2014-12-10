@@ -1,0 +1,95 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+    }
+}
+
+group = 'io.dcow.gradle'
+version = '0.9.0'
+
+ext {
+    artifact = 'sublime'
+    website = "https://dcow.io"
+    github = "https://github.com/dcow"
+}
+
+apply plugin: 'groovy'
+
+dependencies {
+    compile localGroovy()
+    compile gradleApi()
+}
+
+sourceSets {
+    main { // 0.o
+        groovy {
+            srcDir file("${rootProject.projectDir}/buildSrc/src/main/groovy")
+        }
+        resources {
+            srcDir file("${rootProject.projectDir}/buildSrc/src/main/resources")
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId artifact
+            from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+
+apply plugin: 'com.jfrog.bintray'
+
+bintray {
+    user 'dcow'
+    key bintrayApiKey
+
+    publications = ['mavenJava']
+
+    pkg {
+        name = artifact
+        desc = 'Generate a sublime-project file from a gradle build.'
+
+        websiteUrl      = "$github/${rootProject.name}"
+        vcsUrl          = "$github/${rootProject.name}.git"
+        issueTrackerUrl = "$github/${rootProject.name}/issues"
+
+        labels   = ['sublime']
+        licenses = ['Apache-2.0']
+
+        version {
+            vcsTag = project.version
+
+            gpg {
+                def hasPassphrase = rootProject.hasProperty('gpgPassphrase')
+                sign = hasPassphrase
+                passphrase = hasPassphrase ? gpgPassphrase : ''
+            }
+        }
+
+        // c.f. http://plugins.gradle.org/submit
+        attributes = ['gradle-plugin': "io.dcow.sublime:$group:$artifact"]
+
+        repo = 'maven'
+    }
+}
