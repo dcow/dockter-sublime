@@ -7,15 +7,15 @@ import org.gradle.api.tasks.TaskAction
 import static groovy.json.JsonOutput.toJson
 import static groovy.json.JsonOutput.prettyPrint
 
-/** 
+/**
  * Task for generating a Sublime Text 3 project file from a gradle build.
  * <p>
  * This task takes advantage of project-sepecific build systems in Sublime Text 3.
  * Defining a custom build system means we can insert all the tasks declared by the
- * build.gradle script as 
+ * build.gradle script as
  * <a href="http://docs.sublimetext.info/en/latest/reference/build_systems.html#variants">
- * build system <i>variants</i></a> in the project file (which are made available to the 
- * developer as <a href="http://www.sublimetext.com/docs/commands"> sublime text 
+ * build system <i>variants</i></a> in the project file (which are made available to the
+ * developer as <a href="http://www.sublimetext.com/docs/commands"> sublime text
  * <i>commands</i></a>).
  * The downside of this approach is that the project file must be re-generated every time
  * the task graph changes. (A <a href="dcow.github.io/docter-sublime/">sublime text gradle
@@ -35,7 +35,7 @@ public class SublimeProject extends DefaultTask {
     static final String GRADLE = 'gradle'
     static final String WRAPPER = 'w'
 
-    public SublimeProject() { 
+    public SublimeProject() {
         super()
 
         this.description = DESCRIPTION
@@ -52,12 +52,12 @@ public class SublimeProject extends DefaultTask {
         ['Folders', 'Settings', 'BuildSystems'].each {
             "add$it" root
         }
-        
+
         projectFile.write prettyPrint(toJson(root))
     }
 
     def addFolders(root) {
-        // We'll treat Sublime Text folders as Gradle projects 
+        // We'll treat Sublime Text folders as Gradle projects
         root.folders = project.allprojects.collect {
             [
                 'name': it.name,
@@ -76,7 +76,7 @@ public class SublimeProject extends DefaultTask {
 
     def addBuildSystems(root) {
         def gradle = wrapper ? "./$GRADLE$WRAPPER" : GRADLE
-        
+
         root.build_systems = [
             [
                 'name': "Gradle: ${project.name}",
@@ -95,11 +95,11 @@ public class SublimeProject extends DefaultTask {
         allTasks.findAll{it.description?.trim()}.collect {
             // chop off the leading colon..
             [
-                'name': "${it.path.substring(1)} - ${it.description}", 
+                'name': "${it.path.substring(1)} - ${it.description}",
                 'cmd': ["$gradle ${it.path}"]
             ]
         }
-        // Ideally, we need a better reduction of tasks that includes the tasks that 
+        // Ideally, we need a better reduction of tasks that includes the tasks that
         // are available by letting top level tasks trickle down. Something like the
         // set of the union of all tasks by task name (not path).
     }

@@ -19,7 +19,7 @@ class Sublime implements Plugin<Project> {
         tasks.create (name: CLEAR_WORKSPACE_TASK_NAME, type: Delete) {
                 description "Remove the '$WORKSPACE_FILE_EXTENSION' file."
                 delete "${project.name}.$WORKSPACE_FILE_EXTENSION"
-                shouldRunAfter tasks.sublimeProject
+                mustRunAfter tasks.sublimeProject
         }
         tasks.create (name: TASK_NAME) {
                 description "Generate a project file and clear the workspace cache."
