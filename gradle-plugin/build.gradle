@@ -23,17 +23,6 @@ dependencies {
     compile gradleApi()
 }
 
-sourceSets {
-    main { // 0.o
-        groovy {
-            srcDir file("${rootProject.projectDir}/buildSrc/src/main/groovy")
-        }
-        resources {
-            srcDir file("${rootProject.projectDir}/buildSrc/src/main/resources")
-        }
-    }
-}
-
 task sourcesJar(type: Jar) {
     classifier 'sources'
     from sourceSets.main.allSource
