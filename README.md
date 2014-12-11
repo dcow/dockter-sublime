@@ -18,7 +18,7 @@ A Sublime Text plugin does not obselete a Gradle plugin. The plugin also configu
 
 ##### Setup
 
-Grab the [lastest version][2] ([0.9.0][3]) from [jcenter][4]:
+Grab the [lastest version][2] ([0.9.1][3]) from [jcenter][4]:
 
 ```Groovy
 buildscript {
@@ -34,7 +34,7 @@ apply plugin: 'io.dcow.sublime'
 ```
 
 [2]: https://bintray.com/dcow/maven/sublime/view
-[3]: https://bintray.com/dcow/maven/sublime/0.9.0/view
+[3]: https://bintray.com/dcow/maven/sublime/0.9.1/view
 [4]: https://bintray.com/bintray/jcenter
 
 ##### Configuration
