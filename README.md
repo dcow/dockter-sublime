@@ -1,4 +1,4 @@
-# DocterSublime
+# Docter Sublime
 
 Tools for developing Gradle projects using Sublime Text 3.
 
