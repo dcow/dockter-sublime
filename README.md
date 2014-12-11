@@ -2,6 +2,8 @@
 
 Tools for developing Gradle projects using Sublime Text 3.
 
+![Workspace](assets/inception.png)
+
 ### Gradle Plugin
 
 ![Build Status](https://travis-ci.org/dcow/docter-sublime.svg?branch=master) 
