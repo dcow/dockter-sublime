@@ -15,7 +15,7 @@ Applying the `sublime` plugin adds a task named `sublime` to your Gradle project
 
 The drawback of this approach is that updating your project is not fluid. Sublime Text stores your latest configuration in a `Name.sublime-workspace` file. Sublime also [seems to have issues reloading project information][3]. So, ideally we need a Sublime Text plugin that will *dynamically update the editor whenever a build script change is made*.
 
-A Sublime Text plugin does not obselete a Gradle plugin. The plugin also configures Sublime with the names and paths of your Gradle subprojects and excludes your projects build directories. In fact, it allows you to configure any arbitrary project-specific Sublime Text setting. 
+A Sublime Text plugin does not obselete a Gradle plugin. The plugin also configures Sublime with the names and paths of your Gradle subprojects and excludes your projects' build directories. In fact, it allows you to configure any arbitrary project-specific Sublime Text setting. 
 
 [3]: https://www.sublimetext.com/forum/viewtopic.php?f=2&t=5342#p37042 
 
@@ -47,7 +47,7 @@ Simply configure the `sublimeProject` task (defaults listed):
 ```Groovy
 sublimeProject {
     wrapper true
-    projectFile file("${name}.sublime-project")
+    projectFile file("${project.name}.sublime-project")
 }
 ```
 
@@ -65,9 +65,9 @@ The plugin actually creates 3 tasks:
 
     $ gradle sublime
 
-This generates a `$ProjectName.sublime-project` file in your root project directory.
+This generates a `${project.name}.sublime-project` file in your root project directory.
 
-Once the project file is generated, using the Sublime Text **Project** menu, open the newely generated file via the **Open Project** option (be aware you may have to close your current project first). When you open the project you should see the sidebar come up with your logical Gradle module structure (unless you've otherwise configured your project settings). If it doesn't you may have to entirely quit Sublime and try from a fresh launch. 
+Once the project file is generated, using the Sublime Text **Project** menu, open the newly generated file via the **Open Project** option (be aware you may have to close your current project first). When you open the project you should see the sidebar come up with your logical Gradle module structure (unless you've otherwise configured your project settings). If it doesn't you may have to entirely quit Sublime and try from a fresh launch. 
 
 After you open the project you may have to select the build system.
 
