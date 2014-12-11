@@ -8,7 +8,7 @@ buildscript {
 }
 
 group = 'io.dcow.gradle'
-version = '0.9.0'
+version = '0.9.1'
 
 ext {
     artifact = 'sublime'

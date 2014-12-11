@@ -37,12 +37,12 @@ apply plugin: 'io.dcow.sublime'
 
 ##### Configuration
 
-Simply configure the `sublimeProject` task:
+Simply configure the `sublimeProject` task (defaults listed):
 
 ```Groovy
 sublimeProject {
-    wrapper false // default: true
-    projectFile file('Other.sublime-project') // default: "$name.sublime-project"
+    wrapper true
+    projectFile file("$name.sublime-project")
 }
 ```
 

@@ -58,13 +58,26 @@ public class SublimeProject extends DefaultTask {
 
     def addFolders(root) {
         // We'll treat Sublime Text folders as Gradle projects
-        root.folders = project.allprojects.collect {
+        def rootProject = project.rootProject
+        def rootDir = rootProject.projectDir
+
+        root.folders = [
+            [
+                'name': rootProject.name,
+                'path': rootProject.relativePath(rootDir),
+                'folder_exclude_patterns': [
+                    rootProject.relativePath(rootProject.buildDir),
+                    rootProject.relativePath("${rootDir}/.gradle")
+                ] + rootProject.subprojects.collect {
+                    rootProject.relativePath("${it.projectDir}")
+                } // We already iterate over the subprojects set.
+            ]    //  Extract to one loop (return list of tuples).
+        ] + rootProject.subprojects.collect {
             [
                 'name': it.name,
-                'path': project.relativePath(it.projectDir),
+                'path': rootProject.relativePath(it.projectDir),
                 'folder_exclude_patterns': [
-                    project.relativePath(it.buildDir),
-                    project.relativePath("${it.projectDir}/.gradle")
+                    rootProject.relativePath(it.buildDir),
                 ]
             ]
         }
