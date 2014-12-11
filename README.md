@@ -1,4 +1,4 @@
-# Docter Sublime
+# Dockter Sublime
 
 Tools for developing Gradle projects using Sublime Text 3.
 
@@ -6,7 +6,7 @@ Tools for developing Gradle projects using Sublime Text 3.
 
 ### Gradle Plugin
 
-![Build Status](https://travis-ci.org/dcow/docter-sublime.svg?branch=master) 
+![Build Status](https://travis-ci.org/dcow/dockter-sublime.svg?branch=master) 
 
 Applying the `sublime` plugin adds a task named `sublime` to your Gradle project. Executing the task causes a '*<b>Name</b>.sublime-project*' file to be generated with configuration inforamtion relevant to Sublime Text. The project description is complete with an inline Sublime *build system*. This means all your project's tasks will be available via the command palette.
 

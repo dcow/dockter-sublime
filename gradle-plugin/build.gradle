@@ -63,7 +63,7 @@ bintray {
         vcsUrl          = "$github/${rootProject.name}.git"
         issueTrackerUrl = "$github/${rootProject.name}/issues"
 
-        labels   = ['sublime']
+        labels   = ['sublime', 'editor']
         licenses = ['Apache-2.0']
 
         version {

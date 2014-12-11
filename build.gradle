@@ -14,7 +14,7 @@ version = "0.7.2"
 apply plugin: 'io.dcow.sublime'
 
 sublimeProject {
-    projectFile file('DocterSublime.sublime-project')
+    projectFile file('DockterSublime.sublime-project')
 }
 
 task wrapper(type: Wrapper) {
