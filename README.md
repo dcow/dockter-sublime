@@ -11,9 +11,9 @@ Tools for developing Gradle projects using Sublime Text 3.
 [1]: https://travis-ci.org/dcow/dockter-sublime
 [2]: https://travis-ci.org/dcow/dockter-sublime.svg?branch=master
 
-Applying the `sublime` plugin adds a task named `sublime` to your Gradle project. Executing the task causes a '*<b>Name</b>.sublime-project*' file to be generated with configuration inforamtion relevant to Sublime Text. The project description is complete with an inline Sublime *build system*. This means all your project's tasks will be available via the command palette.
+Applying the `sublime` plugin adds a task named `sublime` to your Gradle project. Executing the task causes a `Name.sublime-project` file to be generated with configuration inforamtion relevant to Sublime Text. The project description is complete with an inline Sublime *build system*. This means all your project's tasks will be available via the command palette.
 
-The drawback of this approach is that updating your project is not fluid. Sublime Text stores your latest configuration in a '*<b>Name</b>.sublime-workspace*' file. Sublime also [seems to have issues reloading project information][3]. So, ideally we need a Sublime Text plugin that will *dynamically update the editor whenever a build script change is made*.
+The drawback of this approach is that updating your project is not fluid. Sublime Text stores your latest configuration in a `Name.sublime-workspace` file. Sublime also [seems to have issues reloading project information][3]. So, ideally we need a Sublime Text plugin that will *dynamically update the editor whenever a build script change is made*.
 
 A Sublime Text plugin does not obselete a Gradle plugin. The plugin also configures Sublime with the names and paths of your Gradle subprojects and excludes your projects build directories. In fact, it allows you to configure any arbitrary project-specific Sublime Text setting. 
 
@@ -51,6 +51,8 @@ sublimeProject {
 }
 ```
 
+Eventually you will just configure a `sublime` extension allowing you to tweak any part of the Sublime Text project model.
+
 ##### Usage 
 
 The plugin actually creates 3 tasks:
@@ -63,15 +65,24 @@ The plugin actually creates 3 tasks:
 
     $ gradle sublime
 
-Once the project file is generated, using the Sublime Text **Project** menu, open the newely generated file via the **Open Project** option (be aware you may have to close your current project first). 
+This generates a `$ProjectName.sublime-project` file in your root project directory.
 
-![Project > Open Project](assets/usage-project-dropdown.png "Fig. Open Project")
+Once the project file is generated, using the Sublime Text **Project** menu, open the newely generated file via the **Open Project** option (be aware you may have to close your current project first). When you open the project you should see the sidebar come up with your logical Gradle module structure (unless you've otherwise configured your project settings). If it doesn't you may have to entirely quit Sublime and try from a fresh launch. 
 
-Once you open the project you may have to select the build system.
+After you open the project you may have to select the build system.
 
 ![Tools > Build System > Gradle: project-name](assets/usage-build-system.png "Fig. Select build system")
 
-And that's it. You can now execute all project's `gradle` tasks from the command pallete.
+And that's it. You can now execute all the project's `gradle` tasks that *have a description* from the command pallete.
+
+One more thing. When working with projects in Sublime, I find disabling `hot_exit` and `remember_open_files` useful since everything gets saved in your project workspace:
+
+```json
+{
+    "hot_exit": false,
+    "remember_open_files": false
+}
+```
 
 ### Sublime Text Plugin
 
