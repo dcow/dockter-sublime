@@ -8,9 +8,13 @@ buildscript {
 }
 
 group = 'io.dcow'
-version = "0.9.0"
+version = "0.7.2"
 
 apply plugin: 'io.dcow.sublime'
+
+sublimeProject {
+    projectFile file('DocterSublime.sublime-project')
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion '2.2.1'
