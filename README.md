@@ -10,14 +10,16 @@ Applying the `sublime` plugin adds a task named `sublime` to your Gradle project
 
 The drawback of this approach is that updating your project is not fluid. Sublime Text stores your latest configuration in a *<b>Name</b>.sublime-workspace* filee. Sublime also [seems to have issues reloading project information][1]. So, ideally we need a Sublime Text plugin that will *dynamically update the editor whenever a build script change is made*.
 
-A Sublime Text plugin does not obselete a Gradle plugin. The plugin also configures Sublime with the names and paths of your Gradle subprojects and excludes your projects build directories. It allows you to configure arbitrary project specific settings (in fact all objects). 
+A Sublime Text plugin does not obselete a Gradle plugin. The plugin also configures Sublime with the names and paths of your Gradle subprojects and excludes your projects build directories. In fact, it allows you to configure arbitrary project-specific Sublime Text settings. 
 
 ##### Configuration
 
-    sublime {
-        wrapper false // default: true
-        projectFile file('Other.sublime-project') // default: "$name.sublime-project"
-    }
+```Groovy
+sublime {
+    wrapper false // default: true
+    projectFile file('Other.sublime-project') // default: "$name.sublime-project"
+}
+```
 
 [1]: https://www.sublimetext.com/forum/viewtopic.php?f=2&t=5342#p37042 
 
