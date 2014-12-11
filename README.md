@@ -47,7 +47,7 @@ Simply configure the `sublimeProject` task (defaults listed):
 ```Groovy
 sublimeProject {
     wrapper true
-    projectFile file("$name.sublime-project")
+    projectFile file("${name}.sublime-project")
 }
 ```
 
