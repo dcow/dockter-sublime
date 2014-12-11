@@ -51,6 +51,28 @@ sublimeProject {
 }
 ```
 
+##### Usage 
+
+The plugin actually creates 3 tasks:
+
+1. `sublimeProject`
+2. `clearWorkspace`, and
+3. `sublime`
+
+(which get executed in their respective order). Most of the time all you need to do is execute the `sublime` task.
+
+    $ gradle sublime
+
+Once the project file is generated, using the Sublime Text **Project** menu, open the newely generated file via the **Open Project** option (be aware you may have to close your current project first). 
+
+![Project > Open Project](assets/usage-project-dropdown.png "Fig. Open Project")
+
+Once you open the project you may have to select the build system.
+
+![Tools > Build System > Gradle: project-name](assets/usage-build-system.png "Fig. Select build system")
+
+And that's it. You can now execute all project's `gradle` tasks from the command pallete.
+
 ### Sublime Text Plugin
 
  The Sublime Text 3 plugin's ultimate goal is to be a Gradle project IDE. That will take some time. Initially I would like to remove the need to generate a static build system description by dynamically adding commands to Sublime.
