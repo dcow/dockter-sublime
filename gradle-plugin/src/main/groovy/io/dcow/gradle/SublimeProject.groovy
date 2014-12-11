@@ -18,7 +18,7 @@ import static groovy.json.JsonOutput.prettyPrint
  * developer as <a href="http://www.sublimetext.com/docs/commands"> sublime text
  * <i>commands</i></a>).
  * The downside of this approach is that the project file must be re-generated every time
- * the task graph changes. (A <a href="dcow.github.io/docter-sublime/">sublime text gradle
+ * the task graph changes. (A <a href="dcow.github.io/dockter-sublime/">sublime text gradle
  * plugin</a> is in the works.)
  */
 public class SublimeProject extends DefaultTask {
