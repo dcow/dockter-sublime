@@ -65,7 +65,7 @@ The plugin actually creates 3 tasks:
 
     $ gradle sublime
 
-This generates a `${project.name}.sublime-project` file in your root project directory.
+This generates a `${project.name}.sublime-project` file in your root project directory and deletes the associated `.sublime-workspace` file (because it contains stale information).
 
 Once the project file is generated, using the Sublime Text **Project** menu, open the newly generated file via the **Open Project** option (be aware you may have to close your current project first). When you open the project you should see the sidebar come up with your logical Gradle module structure (unless you've otherwise configured your project settings). If it doesn't you may have to entirely quit Sublime and try from a fresh launch. 
 
