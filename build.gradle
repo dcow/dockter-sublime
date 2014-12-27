@@ -13,8 +13,8 @@ version = "0.7.2"
 
 apply plugin: 'io.dcow.sublime'
 
-sublimeProject {
-    projectFile file('DockterSublime.sublime-project')
+sublime {
+    name 'DockterSublime'
 }
 
 task wrapper(type: Wrapper) {

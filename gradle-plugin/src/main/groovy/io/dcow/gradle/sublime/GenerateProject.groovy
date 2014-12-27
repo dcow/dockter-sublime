@@ -1,4 +1,4 @@
-package io.dcow.gradle
+package io.dcow.gradle.sublime
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputFile
@@ -21,26 +21,21 @@ import static groovy.json.JsonOutput.prettyPrint
  * the task graph changes. (A <a href="dcow.github.io/dockter-sublime/">sublime text gradle
  * plugin</a> is in the works.)
  */
-public class SublimeProject extends DefaultTask {
+public class GenerateProject extends DefaultTask {
 
     public static final String DESCRIPTION = 'Generates a Sublime Text 3 project file.'
-    public static final String FILE_EXTENSION = "sublime-project"
 
     @OutputFile
     File projectFile
-
-    boolean wrapper
 
     // Methods of invoking Gradle
     static final String GRADLE = 'gradle'
     static final String WRAPPER = 'w'
 
-    public SublimeProject() {
+    public GenerateProject() {
         super()
 
         this.description = DESCRIPTION
-        this.wrapper = true // Most people are using the wrapper.
-        this.projectFile = project.file "${project.name}.$FILE_EXTENSION"
         // This task is never up to date as it changes with the build script.
         this.outputs.upToDateWhen {false}
     }
@@ -84,15 +79,15 @@ public class SublimeProject extends DefaultTask {
     }
 
     def addSettings(root) {
-        root.settings = [:] // no settings yet
+        root.settings = project.sublime.settings
     }
 
     def addBuildSystems(root) {
-        def gradle = wrapper ? "./$GRADLE$WRAPPER" : GRADLE
+        def gradle = project.sublime.wrapper ? "./$GRADLE$WRAPPER" : GRADLE
 
         root.build_systems = [
             [
-                'name': "Gradle: ${project.name}",
+                'name': "Gradle: ${project.sublime.name}",
                 'working_dir': '$project_path',
                 'cmd': ["$gradle build"],
                 'shell': true,
@@ -115,14 +110,6 @@ public class SublimeProject extends DefaultTask {
         // Ideally, we need a better reduction of tasks that includes the tasks that
         // are available by letting top level tasks trickle down. Something like the
         // set of the union of all tasks by task name (not path).
-    }
-
-    boolean getWrapper() {
-        return this.wrapper
-    }
-
-    void setWrapper(boolean val) {
-        this.wrapper = val
     }
 
     File getProjectFile() {
